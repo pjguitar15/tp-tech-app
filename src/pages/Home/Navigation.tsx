@@ -1,5 +1,5 @@
 import React from 'react'
-import { TEST_NAVIGATION_LINKS } from './testLinks'
+import { NAVIGATION_LINKS } from './navigationLinks'
 import { NavigationItemProps } from './homeProps'
 import { motion } from 'framer-motion'
 import { FaGlobeAmericas } from 'react-icons/fa'
@@ -8,8 +8,8 @@ import { useNavigate } from 'react-router-dom'
 const Navigation = () => {
   return (
     <main>
-      <div className='grid grid-cols-3 justify-center gap-6 py-16'>
-        {TEST_NAVIGATION_LINKS.map((item: NavigationItemProps, index) => (
+      <div className='grid grid-cols-3 justify-center gap-6 py-36'>
+        {NAVIGATION_LINKS.map((item: NavigationItemProps, index) => (
           <NavigationItem key={index} item={item} />
         ))}
       </div>

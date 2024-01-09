@@ -1,6 +1,7 @@
 import Home from './pages/Home/Home'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import TrueParentsPhoto from './pages/TrueParentsPhoto/TrueParentsPhoto'
+import TPImage from './pages/TPImage/TPImage'
+import Navbar from './components/Navbar/Navbar'
 
 const router = createBrowserRouter([
   {
@@ -9,7 +10,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/true-parents',
-    element: <TrueParentsPhoto />,
+    element: <TPImage />,
   },
   {
     path: 'admin',
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
 const App = () => {
   return (
     <>
+      <Navbar />
       <RouterProvider router={router} />
     </>
   )

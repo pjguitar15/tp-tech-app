@@ -1,4 +1,4 @@
-export const TEST_NAVIGATION_LINKS = [
+export const NAVIGATION_LINKS = [
   {
     title: 'English Family Pledge',
     imgUrl:
@@ -25,7 +25,7 @@ export const TEST_NAVIGATION_LINKS = [
     link: '/true-parents',
   },
   {
-    title: 'English Family Pledge',
+    title: 'True Parents Words',
     imgUrl:
       'https://familyfedihq.org/wp-content/uploads/2023/05/230507tm-1-1024x683.jpg',
     withIcon: true,
