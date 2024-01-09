@@ -3,6 +3,7 @@ import { TEST_NAVIGATION_LINKS } from './testLinks'
 import { NavigationItemProps } from './homeProps'
 import { motion } from 'framer-motion'
 import { FaGlobeAmericas } from 'react-icons/fa'
+import { useNavigate } from 'react-router-dom'
 
 const Navigation = () => {
   return (
@@ -17,14 +18,18 @@ const Navigation = () => {
 }
 
 const NavigationItem: React.FC<{ item: NavigationItemProps }> = ({ item }) => {
+  const navigate = useNavigate()
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 2 }}
+      transition={{ duration: 1.2 }}
       className='relative rounded-xl bg-cover bg-center cursor-pointer hover:scale-105 duration-300 group'
       style={{
         backgroundImage: `url(${item.imgUrl})`,
+      }}
+      onClick={() => {
+        navigate(item.link)
       }}
     >
       <div className='absolute inset-0 bg-black bg-blend-darken group-hover:opacity-50 duration-300 opacity-70 rounded-xl'></div>
