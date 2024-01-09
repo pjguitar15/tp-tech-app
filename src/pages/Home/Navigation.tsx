@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 const Navigation = () => {
   return (
     <main>
-      <div className='grid grid-cols-3 justify-center gap-6 py-36'>
+      <div className='grid grid-cols-3 justify-center gap-6 pt-36'>
         {NAVIGATION_LINKS.map((item: NavigationItemProps, index) => (
           <NavigationItem key={index} item={item} />
         ))}
