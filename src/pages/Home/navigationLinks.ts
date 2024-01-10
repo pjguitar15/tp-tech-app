@@ -9,7 +9,7 @@ export const NAVIGATION_LINKS = [
     title: 'Kajeong Maengse',
     imgUrl:
       'https://slideplayer.com/slide/10331387/35/images/3/1.+%EA%B0%80%EC%A0%95%EB%A7%B9%EC%84%B8+Ka-jeong+maeng-se.jpg',
-    link: '/true-parents',
+    link: '/kajeong-maengse/1',
   },
   {
     title: 'True Parents Picture',

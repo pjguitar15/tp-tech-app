@@ -5,6 +5,9 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    backgroundImage: {
+      'default-bg': "url('../public/images/default-bg.png')",
+    },
     extend: {
     },
   },

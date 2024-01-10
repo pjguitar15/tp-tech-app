@@ -1,16 +1,37 @@
 import Home from './pages/Home/Home'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom'
 import TPImage from './pages/TPImage/TPImage'
 import Navbar from './components/Navbar/Navbar'
+import KajeongMaengse from './pages/KajeongMaengse/KajeongMaengse'
+
+const NavbarWrapper = () => {
+  return (
+    <>
+      <Navbar />
+      <Outlet />
+    </>
+  )
+}
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Home />,
-  },
-  {
-    path: '/true-parents',
-    element: <TPImage />,
+    element: <NavbarWrapper />,
+    children: [
+      {
+        path: '/',
+        element: <Home />,
+        index: true,
+      },
+      {
+        path: '/true-parents',
+        element: <TPImage />,
+      },
+      {
+        path: '/kajeong-maengse/:number',
+        element: <KajeongMaengse />,
+      },
+    ],
   },
   {
     path: 'admin',
@@ -21,7 +42,6 @@ const router = createBrowserRouter([
 const App = () => {
   return (
     <>
-      <Navbar />
       <RouterProvider router={router} />
     </>
   )
