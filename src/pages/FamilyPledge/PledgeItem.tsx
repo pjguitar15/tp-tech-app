@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom'
-import { KajeongMaengseType } from './KajeongMaengse'
+import { FamilyPledgeType } from './FamilyPledge'
 import { useEffect } from 'react'
 import { IoArrowForwardCircleSharp } from 'react-icons/io5'
 import { IoArrowBackCircle } from 'react-icons/io5'
@@ -9,11 +9,7 @@ type RouteParams = {
   number?: string
 }
 
-const MaengseItem = ({
-  currentPledge,
-}: {
-  currentPledge: KajeongMaengseType
-}) => {
+const PledgeItem = ({ currentPledge }: { currentPledge: FamilyPledgeType }) => {
   const { number } = useParams<RouteParams>() // Providing type information here
   const paramNumberToInteger = parseInt(number ?? '1', 10)
   const navigate = useNavigate()
@@ -23,11 +19,11 @@ const MaengseItem = ({
   }, [])
 
   const goToNextNumber = () => {
-    navigate(`/kajeong-maengse/${paramNumberToInteger + 1}`)
+    navigate(`/family-pledge/${paramNumberToInteger + 1}`)
   }
 
   const goToPreviousNumber = () => {
-    navigate(`/kajeong-maengse/${paramNumberToInteger - 1}`)
+    navigate(`/family-pledge/${paramNumberToInteger - 1}`)
   }
   return (
     <div>
@@ -69,4 +65,4 @@ const MaengseItem = ({
   )
 }
 
-export default MaengseItem
+export default PledgeItem

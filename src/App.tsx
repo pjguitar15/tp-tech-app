@@ -3,6 +3,7 @@ import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom'
 import TPImage from './pages/TPImage/TPImage'
 import Navbar from './components/Navbar/Navbar'
 import KajeongMaengse from './pages/KajeongMaengse/KajeongMaengse'
+import FamilyPledge from './pages/FamilyPledge/FamilyPledge'
 
 const NavbarWrapper = () => {
   return (
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: '/kajeong-maengse/:number',
         element: <KajeongMaengse />,
+      },
+      {
+        path: '/family-pledge/:number',
+        element: <FamilyPledge />,
       },
     ],
   },
