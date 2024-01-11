@@ -47,7 +47,7 @@ const FamilyPledge = () => {
         transition={{ duration: 1.2 }}
         className='container mx-auto'
       >
-        <div className='pt-32'>
+        <div className='pt-32 inline-block'>
           <Link to='/'>
             <MdArrowBackIosNew className='text-white text-2xl' />
           </Link>

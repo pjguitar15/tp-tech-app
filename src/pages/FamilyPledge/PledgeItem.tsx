@@ -14,10 +14,6 @@ const PledgeItem = ({ currentPledge }: { currentPledge: FamilyPledgeType }) => {
   const paramNumberToInteger = parseInt(number ?? '1', 10)
   const navigate = useNavigate()
 
-  useEffect(() => {
-    console.log(paramNumberToInteger < 8)
-  }, [])
-
   const goToNextNumber = () => {
     navigate(`/family-pledge/${paramNumberToInteger + 1}`)
   }

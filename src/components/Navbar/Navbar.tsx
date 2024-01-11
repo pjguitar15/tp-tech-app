@@ -1,7 +1,7 @@
 import CIGLogo from '/src/assets/cig-logo.png'
 import { useNavigate } from 'react-router-dom'
 import { IoMusicalNotes } from 'react-icons/io5'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { IoMdPlay } from 'react-icons/io'
 
 type SoundLinksType = {
@@ -12,8 +12,28 @@ type SoundLinksType = {
 const Navbar = () => {
   const [isSoundOpen, setIsSoundOpen] = useState<boolean>(false)
   const navigate = useNavigate()
+  const soundMenuRef = useRef(null)
 
-  const SOUND_LINKS = [
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        soundMenuRef.current &&
+        !soundMenuRef.current.contains(event.target as Node)
+      ) {
+        setIsSoundOpen(false)
+      }
+    }
+
+    // Add the event listener when the component mounts
+    document.addEventListener('click', handleClickOutside)
+
+    // Remove the event listener when the component unmounts
+    return () => {
+      document.removeEventListener('click', handleClickOutside)
+    }
+  }, [])
+
+  const SOUND_LINKS: SoundLinksType[] = [
     {
       title: 'Prayer Music',
       shortcut: 'ctrl + 1',
@@ -63,7 +83,7 @@ const Navbar = () => {
         </div>
       </div>
       <div>
-        <div className='relative'>
+        <div className='relative' ref={soundMenuRef}>
           <IoMusicalNotes
             onClick={() => {
               setIsSoundOpen(!isSoundOpen)

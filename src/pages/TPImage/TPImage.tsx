@@ -17,7 +17,7 @@ const TPImage = () => {
         <link rel='canonical' href='http://mysite.com/example' />
       </Helmet>
       <div className='container mx-auto'>
-        <div className='pt-32'>
+        <div className='pt-32 inline-block'>
           <Link to='/'>
             <MdArrowBackIosNew className='text-white text-2xl' />
           </Link>

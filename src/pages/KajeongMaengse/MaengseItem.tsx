@@ -18,10 +18,6 @@ const MaengseItem = ({
   const paramNumberToInteger = parseInt(number ?? '1', 10)
   const navigate = useNavigate()
 
-  useEffect(() => {
-    console.log(paramNumberToInteger < 8)
-  }, [])
-
   const goToNextNumber = () => {
     navigate(`/kajeong-maengse/${paramNumberToInteger + 1}`)
   }
