@@ -16,7 +16,7 @@ const Navbar = () => {
   const navigate = useNavigate()
   const soundMenuRef = useRef<HTMLDivElement>(null)
 
-  const { toggle, isClapPlaying } = useAudioContext()
+  const { toggle, isClapPlaying, isPrayerPlaying } = useAudioContext()
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -28,10 +28,8 @@ const Navbar = () => {
       }
     }
 
-    // Add the event listener when the component mounts
     document.addEventListener('click', handleClickOutside)
 
-    // Remove the event listener when the component unmounts
     return () => {
       document.removeEventListener('click', handleClickOutside)
     }
@@ -66,11 +64,26 @@ const Navbar = () => {
         className='flex gap-3 items-center cursor-pointer hover:scale-105 duration-300 justify-between'
       >
         <div className='flex gap-2'>
-          {isClapPlaying && item.title === 'Clap SFX' ? (
-            <IoMdPause className='text-3xl' />
-          ) : (
-            <IoMdPlay className='text-3xl' />
+          {item.title === 'Clap SFX' && (
+            <>
+              {isClapPlaying ? (
+                <IoMdPause className='text-3xl' />
+              ) : (
+                <IoMdPlay className='text-3xl' />
+              )}
+            </>
           )}
+
+          {item.title === 'Prayer Music' && (
+            <>
+              {isPrayerPlaying ? (
+                <IoMdPause className='text-3xl' />
+              ) : (
+                <IoMdPlay className='text-3xl' />
+              )}
+            </>
+          )}
+
           <h3 className='text-lg font-semibold text-white'>{item.title}</h3>
         </div>
         <div className='bg-[#5D4483] px-3 rounded py-1 font-semibold'>

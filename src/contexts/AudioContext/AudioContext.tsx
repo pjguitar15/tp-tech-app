@@ -3,6 +3,7 @@ import { createContext, useContext } from 'react'
 export interface AudioContextType {
   toggle: (item: string) => void
   isClapPlaying: boolean
+  isPrayerPlaying: boolean
 }
 
 const AudioContext = createContext<AudioContextType | undefined>(undefined)
