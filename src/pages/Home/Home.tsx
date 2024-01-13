@@ -1,4 +1,3 @@
-import React from 'react'
 import { Helmet } from 'react-helmet'
 import Navigation from './Navigation'
 import HolySongPlayerButton from '../HolySongPlayer/HolySongPlayerButton'

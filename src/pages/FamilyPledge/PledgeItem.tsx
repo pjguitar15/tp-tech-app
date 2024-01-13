@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { FamilyPledgeType } from './FamilyPledge'
-import { useEffect } from 'react'
 import { IoArrowForwardCircleSharp } from 'react-icons/io5'
 import { IoArrowBackCircle } from 'react-icons/io5'
 import { IoMdHome } from 'react-icons/io'

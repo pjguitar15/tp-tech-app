@@ -4,6 +4,8 @@ import TPImage from './pages/TPImage/TPImage'
 import Navbar from './components/Navbar/Navbar'
 import KajeongMaengse from './pages/KajeongMaengse/KajeongMaengse'
 import FamilyPledge from './pages/FamilyPledge/FamilyPledge'
+import { configureStore } from '@reduxjs/toolkit'
+import { Provider } from 'react-redux'
 
 const NavbarWrapper = () => {
   return (
@@ -38,16 +40,20 @@ const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: 'admin',
-    children: [],
-  },
 ])
+
+const store = configureStore({
+  reducer: {
+    // user: useReducer,
+  },
+})
 
 const App = () => {
   return (
     <>
-      <RouterProvider router={router} />
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
     </>
   )
 }
