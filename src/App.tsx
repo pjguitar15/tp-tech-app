@@ -6,6 +6,7 @@ import KajeongMaengse from './pages/KajeongMaengse/KajeongMaengse'
 import FamilyPledge from './pages/FamilyPledge/FamilyPledge'
 import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
+import AudioContextProvider from './contexts/AudioContext/AudioContextProvider'
 
 const NavbarWrapper = () => {
   return (
@@ -51,9 +52,11 @@ const store = configureStore({
 const App = () => {
   return (
     <>
-      <Provider store={store}>
-        <RouterProvider router={router} />
-      </Provider>
+      <AudioContextProvider>
+        <Provider store={store}>
+          <RouterProvider router={router} />
+        </Provider>
+      </AudioContextProvider>
     </>
   )
 }

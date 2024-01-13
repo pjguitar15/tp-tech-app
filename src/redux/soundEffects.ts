@@ -7,7 +7,7 @@ export const soundEffectSlice = createSlice({
   initialState: { value: initialState },
   // add all the functions
   reducers: {
-    login: (state, action) => {
+    playClap: (state, action) => {
       // change the state value from payload
       state.value = action.payload
     },
@@ -15,6 +15,6 @@ export const soundEffectSlice = createSlice({
 })
 
 // will be used for actions
-export const { login } = soundEffectSlice.actions
+export const { playClap } = soundEffectSlice.actions
 
 export default soundEffectSlice.reducer

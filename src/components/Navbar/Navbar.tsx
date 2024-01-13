@@ -4,19 +4,19 @@ import { IoMusicalNotes } from 'react-icons/io5'
 import { useState, useEffect, useRef } from 'react'
 import { IoMdPlay } from 'react-icons/io'
 import { IoMdPause } from 'react-icons/io'
-import clapSound from '../../assets/sound/applause-sound-effect.mp3'
-import useAudio from '../../helpers/hooks/useAudio'
+import { useAudioContext } from '../../contexts/AudioContext/AudioContext'
 
 type SoundLinksType = {
   title: string
   shortcut: string
-  sound: string
 }
 
 const Navbar = () => {
   const [isSoundOpen, setIsSoundOpen] = useState<boolean>(false)
   const navigate = useNavigate()
   const soundMenuRef = useRef<HTMLDivElement>(null)
+
+  const { toggle, isClapPlaying } = useAudioContext()
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -41,34 +41,29 @@ const Navbar = () => {
     {
       title: 'Prayer Music',
       shortcut: 'ctrl + 1',
-      sound: clapSound,
     },
     {
       title: 'Clap SFX',
       shortcut: 'ctrl + 2',
-      sound: clapSound,
     },
     {
       title: 'Eog Mansei',
       shortcut: 'ctrl + 3',
-      sound: clapSound,
     },
     {
       title: 'STOP',
       shortcut: 'ctrl + 0',
-      sound: clapSound,
     },
   ]
 
   const KeyboardShortcut = ({ item }: { item: SoundLinksType }) => {
-    const { playing, toggle } = useAudio(item.sound)
     return (
       <div
-        onClick={toggle}
+        onClick={() => toggle(item.title)}
         className='flex gap-3 items-center cursor-pointer hover:scale-105 duration-300 justify-between'
       >
         <div className='flex gap-2'>
-          {playing ? (
+          {isClapPlaying ? (
             <IoMdPause className='text-3xl' />
           ) : (
             <IoMdPlay className='text-3xl' />
