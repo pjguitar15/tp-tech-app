@@ -1,14 +1,10 @@
 import CIGLogo from '/src/assets/cig-logo.png'
 import { useNavigate } from 'react-router-dom'
-import { IoMusicalNotes } from 'react-icons/io5'
 import { useState, useEffect, useRef } from 'react'
-import { IoMdPlay } from 'react-icons/io'
-import { IoMdPause } from 'react-icons/io'
-import { AiFillSound } from 'react-icons/ai'
-import { IoStopSharp } from 'react-icons/io5'
 import { useAudioContext } from '../../contexts/AudioContext/AudioContext'
+import NavbarDropdown from './NavbarDropdown'
 
-type SoundLinksType = {
+export type SoundLinksType = {
   title: string
   shortcut: string
   isPlaying: boolean
@@ -19,13 +15,8 @@ const Navbar = () => {
   const navigate = useNavigate()
   const soundMenuRef = useRef<HTMLDivElement>(null)
 
-  const {
-    toggle,
-    isClapPlaying,
-    isPrayerPlaying,
-    isEogManseiPlaying,
-    handleReset,
-  } = useAudioContext()
+  const { isClapPlaying, isPrayerPlaying, isEogManseiPlaying } =
+    useAudioContext()
 
   const isSoundPlaying = isClapPlaying || isPrayerPlaying || isEogManseiPlaying
 
@@ -68,44 +59,6 @@ const Navbar = () => {
       isPlaying: false,
     },
   ]
-  type PlayPauseIconProps = {
-    isPlaying: boolean
-  }
-
-  const PlayPauseIcon: React.FC<PlayPauseIconProps> = ({ isPlaying }) => {
-    return isPlaying ? (
-      <IoMdPause className='text-3xl' />
-    ) : (
-      <IoMdPlay className='text-3xl' />
-    )
-  }
-
-  const KeyboardShortcut = ({ item }: { item: SoundLinksType }) => {
-    return (
-      <div
-        onClick={(event) => {
-          event.stopPropagation()
-          toggle(item.title)
-        }}
-        className='flex gap-3 items-center cursor-pointer hover:scale-105 duration-300 justify-between'
-      >
-        <div className='flex gap-2'>
-          {item.title === 'Stop/Reset' ? (
-            <>
-              <IoStopSharp onClick={handleReset} className='text-3xl' />
-            </>
-          ) : (
-            <PlayPauseIcon isPlaying={item.isPlaying} />
-          )}
-
-          <h3 className='text-lg font-semibold text-white'>{item.title}</h3>
-        </div>
-        <div className='bg-[#5D4483] px-3 rounded py-1 font-semibold'>
-          {item.shortcut}
-        </div>
-      </div>
-    )
-  }
 
   return (
     <nav className='bg-[#16061E]/50 py-5 px-12 absolute w-full flex justify-between items-center'>
@@ -123,38 +76,13 @@ const Navbar = () => {
           </p>
         </div>
       </div>
-      <div>
-        <div className='relative' ref={soundMenuRef}>
-          {isSoundPlaying ? (
-            <AiFillSound
-              onClick={() => {
-                setIsSoundOpen(!isSoundOpen)
-              }}
-              className='text-white text-3xl cursor-pointer hover:scale-110 duration-300'
-            />
-          ) : (
-            <IoMusicalNotes
-              onClick={() => {
-                setIsSoundOpen(!isSoundOpen)
-              }}
-              className='text-white text-3xl cursor-pointer hover:scale-110 duration-300'
-            />
-          )}
-
-          {isSoundOpen && (
-            <div
-              className='absolute right-0 top-12 text-white p-8 rounded-lg z-10 min-w-[300px]'
-              style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }}
-            >
-              <div className='flex flex-col gap-7'>
-                {SOUND_LINKS.map((item: SoundLinksType, index) => (
-                  <KeyboardShortcut key={index} item={item} />
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
+      <NavbarDropdown
+        soundMenuRef={soundMenuRef}
+        isSoundPlaying={isSoundPlaying}
+        setIsSoundOpen={setIsSoundOpen}
+        isSoundOpen={isSoundOpen}
+        SOUND_LINKS={SOUND_LINKS}
+      />
     </nav>
   )
 }

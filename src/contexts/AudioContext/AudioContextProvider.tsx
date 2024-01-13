@@ -1,4 +1,4 @@
-import React, { useState, ReactNode, useEffect, useRef } from 'react'
+import React, { useState, ReactNode, useEffect } from 'react'
 import { AudioContext, AudioContextType } from './AudioContext'
 import applauseSoundEffect from '../../assets/sound/applause-sound-effect.mp3'
 import prayerSoundEffect from '../../assets/sound/prayer.mp3'
