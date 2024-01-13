@@ -16,30 +16,35 @@ const AudioContextProvider: React.FC<{ children: ReactNode }> = ({
   const [eogManseiAudio] = useState(new Audio(eogManseiSoundEffect))
 
   const toggle = (item: string) => {
-    if (item === 'Clap SFX') {
-      setIsClapPlaying(!isClapPlaying)
+    const soundToggleMap: Record<
+      string,
+      React.Dispatch<React.SetStateAction<boolean>>
+    > = {
+      'Clap SFX': setIsClapPlaying,
+      'Prayer Music': setIsPrayerPlaying,
+      'Eog Mansei': setIsEogManseiPlaying,
     }
 
-    if (item === 'Prayer Music') {
-      setIsPrayerPlaying(!isPrayerPlaying)
-    }
+    const toggleFunction = soundToggleMap[item]
 
-    if (item === 'Eog Mansei') {
-      setIsEogManseiPlaying(!isEogManseiPlaying)
+    if (toggleFunction) {
+      toggleFunction((prev) => !prev)
     }
   }
 
   const handleReset = () => {
-    clapAudio.pause()
-    clapAudio.currentTime = 0
-    prayerAudio.pause()
-    prayerAudio.currentTime = 0
-    eogManseiAudio.pause()
-    eogManseiAudio.currentTime = 0
+    const audioRefs = [clapAudio, prayerAudio, eogManseiAudio]
+    const setPlayingStates = [
+      setIsClapPlaying,
+      setIsPrayerPlaying,
+      setIsEogManseiPlaying,
+    ]
 
-    setIsClapPlaying(false)
-    setIsPrayerPlaying(false)
-    setIsEogManseiPlaying(false)
+    audioRefs.forEach((audio, index) => {
+      audio.pause()
+      audio.currentTime = 0
+      setPlayingStates[index](false)
+    })
   }
 
   const contextValue: AudioContextType = {
@@ -51,32 +56,58 @@ const AudioContextProvider: React.FC<{ children: ReactNode }> = ({
   }
 
   useEffect(() => {
-    isClapPlaying ? clapAudio.play() : clapAudio.pause()
-    isPrayerPlaying ? prayerAudio.play() : prayerAudio.pause()
-    isEogManseiPlaying ? eogManseiAudio.play() : eogManseiAudio.pause()
+    const audioElements = [clapAudio, prayerAudio, eogManseiAudio]
+    const playingStates = [isClapPlaying, isPrayerPlaying, isEogManseiPlaying]
+
+    audioElements.forEach((audio, index) => {
+      playingStates[index] ? audio.play() : audio.pause()
+    })
   }, [isClapPlaying, isPrayerPlaying, isEogManseiPlaying])
 
   useEffect(() => {
-    const handleClapEnded = () => {
-      setIsClapPlaying(false)
-    }
+    const audioElements = [clapAudio, prayerAudio, eogManseiAudio]
+    const endedHandlers = [
+      () => setIsClapPlaying(false),
+      () => setIsPrayerPlaying(false),
+      () => setIsEogManseiPlaying(false),
+    ]
 
-    const handlePrayerEnded = () => {
-      setIsPrayerPlaying(false)
-    }
-
-    const handleEogManseiEnded = () => {
-      setIsEogManseiPlaying(false)
-    }
-
-    clapAudio.addEventListener('ended', handleClapEnded)
-    prayerAudio.addEventListener('ended', handlePrayerEnded)
-    eogManseiAudio.addEventListener('ended', handleEogManseiEnded)
+    audioElements.forEach((audio, index) => {
+      audio.addEventListener('ended', endedHandlers[index])
+    })
 
     return () => {
-      clapAudio.removeEventListener('ended', handleClapEnded)
-      prayerAudio.removeEventListener('ended', handlePrayerEnded)
-      eogManseiAudio.removeEventListener('ended', handleEogManseiEnded)
+      audioElements.forEach((audio, index) => {
+        audio.removeEventListener('ended', endedHandlers[index])
+      })
+    }
+  }, [clapAudio, prayerAudio, eogManseiAudio])
+
+  // Keyboard Shortcuts Code
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      event.preventDefault()
+      const keyMappings: { [key: string]: string } = {
+        '1': 'Prayer Music',
+        '2': 'Clap SFX',
+        '3': 'Eog Mansei',
+      }
+
+      const soundName = keyMappings[event.key]
+
+      if (soundName && event.ctrlKey) {
+        toggle(soundName)
+      }
+
+      if (event.key === '0' && event.ctrlKey) {
+        handleReset()
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyPress)
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress)
     }
   }, [])
 
