@@ -4,6 +4,7 @@ import { IoMusicalNotes } from 'react-icons/io5'
 import { useState, useEffect, useRef } from 'react'
 import { IoMdPlay } from 'react-icons/io'
 import { IoMdPause } from 'react-icons/io'
+import { AiFillSound } from 'react-icons/ai'
 import { useAudioContext } from '../../contexts/AudioContext/AudioContext'
 
 type SoundLinksType = {
@@ -17,6 +18,8 @@ const Navbar = () => {
   const soundMenuRef = useRef<HTMLDivElement>(null)
 
   const { toggle, isClapPlaying, isPrayerPlaying } = useAudioContext()
+
+  const isSoundPlaying = isClapPlaying || isPrayerPlaying
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -111,12 +114,22 @@ const Navbar = () => {
       </div>
       <div>
         <div className='relative' ref={soundMenuRef}>
-          <IoMusicalNotes
-            onClick={() => {
-              setIsSoundOpen(!isSoundOpen)
-            }}
-            className='text-white text-3xl cursor-pointer hover:scale-110 duration-300'
-          />
+          {isSoundPlaying ? (
+            <AiFillSound
+              onClick={() => {
+                setIsSoundOpen(!isSoundOpen)
+              }}
+              className='text-white text-3xl cursor-pointer hover:scale-110 duration-300'
+            />
+          ) : (
+            <IoMusicalNotes
+              onClick={() => {
+                setIsSoundOpen(!isSoundOpen)
+              }}
+              className='text-white text-3xl cursor-pointer hover:scale-110 duration-300'
+            />
+          )}
+
           {isSoundOpen && (
             <div
               className='absolute right-0 top-12 text-white p-8 rounded-lg z-10 min-w-[300px]'
