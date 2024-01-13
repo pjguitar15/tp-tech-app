@@ -4,6 +4,8 @@ export interface AudioContextType {
   toggle: (item: string) => void
   isClapPlaying: boolean
   isPrayerPlaying: boolean
+  isEogManseiPlaying: boolean
+  handleReset: () => void
 }
 
 const AudioContext = createContext<AudioContextType | undefined>(undefined)

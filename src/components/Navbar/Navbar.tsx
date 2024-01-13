@@ -5,11 +5,13 @@ import { useState, useEffect, useRef } from 'react'
 import { IoMdPlay } from 'react-icons/io'
 import { IoMdPause } from 'react-icons/io'
 import { AiFillSound } from 'react-icons/ai'
+import { IoStopSharp } from 'react-icons/io5'
 import { useAudioContext } from '../../contexts/AudioContext/AudioContext'
 
 type SoundLinksType = {
   title: string
   shortcut: string
+  isPlaying: boolean
 }
 
 const Navbar = () => {
@@ -17,9 +19,15 @@ const Navbar = () => {
   const navigate = useNavigate()
   const soundMenuRef = useRef<HTMLDivElement>(null)
 
-  const { toggle, isClapPlaying, isPrayerPlaying } = useAudioContext()
+  const {
+    toggle,
+    isClapPlaying,
+    isPrayerPlaying,
+    isEogManseiPlaying,
+    handleReset,
+  } = useAudioContext()
 
-  const isSoundPlaying = isClapPlaying || isPrayerPlaying
+  const isSoundPlaying = isClapPlaying || isPrayerPlaying || isEogManseiPlaying
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -42,20 +50,35 @@ const Navbar = () => {
     {
       title: 'Prayer Music',
       shortcut: 'ctrl + 1',
+      isPlaying: isPrayerPlaying,
     },
     {
       title: 'Clap SFX',
       shortcut: 'ctrl + 2',
+      isPlaying: isClapPlaying,
     },
     {
       title: 'Eog Mansei',
       shortcut: 'ctrl + 3',
+      isPlaying: isEogManseiPlaying,
     },
     {
-      title: 'STOP',
+      title: 'Stop/Reset',
       shortcut: 'ctrl + 0',
+      isPlaying: false,
     },
   ]
+  type PlayPauseIconProps = {
+    isPlaying: boolean
+  }
+
+  const PlayPauseIcon: React.FC<PlayPauseIconProps> = ({ isPlaying }) => {
+    return isPlaying ? (
+      <IoMdPause className='text-3xl' />
+    ) : (
+      <IoMdPlay className='text-3xl' />
+    )
+  }
 
   const KeyboardShortcut = ({ item }: { item: SoundLinksType }) => {
     return (
@@ -67,24 +90,12 @@ const Navbar = () => {
         className='flex gap-3 items-center cursor-pointer hover:scale-105 duration-300 justify-between'
       >
         <div className='flex gap-2'>
-          {item.title === 'Clap SFX' && (
+          {item.title === 'Stop/Reset' ? (
             <>
-              {isClapPlaying ? (
-                <IoMdPause className='text-3xl' />
-              ) : (
-                <IoMdPlay className='text-3xl' />
-              )}
+              <IoStopSharp onClick={handleReset} className='text-3xl' />
             </>
-          )}
-
-          {item.title === 'Prayer Music' && (
-            <>
-              {isPrayerPlaying ? (
-                <IoMdPause className='text-3xl' />
-              ) : (
-                <IoMdPlay className='text-3xl' />
-              )}
-            </>
+          ) : (
+            <PlayPauseIcon isPlaying={item.isPlaying} />
           )}
 
           <h3 className='text-lg font-semibold text-white'>{item.title}</h3>
