@@ -24,7 +24,7 @@ const NavigationItem: React.FC<{ item: NavigationItemProps }> = ({ item }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1.2 }}
-      className='relative rounded-xl bg-cover bg-center cursor-pointer hover:scale-105 duration-300 group'
+      className='relative rounded-xl bg-cover bg-center cursor-pointer duration-300 hover:scale-105 group'
       style={{
         backgroundImage: `url(${item.imgUrl})`,
       }}
@@ -35,7 +35,7 @@ const NavigationItem: React.FC<{ item: NavigationItemProps }> = ({ item }) => {
       <div className='absolute inset-0 bg-black bg-blend-darken group-hover:opacity-50 duration-300 opacity-70 rounded-xl'></div>
 
       <div
-        className={`relative z-10 ${item.withIcon ? 'pt-24' : 'pt-52'} ${
+        className={`relative ${item.withIcon ? 'pt-24' : 'pt-52'} ${
           item.withIcon ? 'pb-24' : 'pb-12'
         } px-24`}
       >

@@ -59,11 +59,14 @@ const Navbar = () => {
   const KeyboardShortcut = ({ item }: { item: SoundLinksType }) => {
     return (
       <div
-        onClick={() => toggle(item.title)}
+        onClick={(event) => {
+          event.stopPropagation()
+          toggle(item.title)
+        }}
         className='flex gap-3 items-center cursor-pointer hover:scale-105 duration-300 justify-between'
       >
         <div className='flex gap-2'>
-          {isClapPlaying ? (
+          {isClapPlaying && item.title === 'Clap SFX' ? (
             <IoMdPause className='text-3xl' />
           ) : (
             <IoMdPlay className='text-3xl' />
