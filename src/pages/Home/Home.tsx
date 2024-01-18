@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet'
 import Navigation from './Navigation'
-import HolySongPlayerButton from '../HolySongPlayer/HolySongPlayerButton'
+import HolySongPlayerButton from './HolySongPlayerButton'
 import image from '../../assets/default-bg.png'
 
 const Home = () => {

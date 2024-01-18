@@ -7,6 +7,7 @@ import FamilyPledge from './pages/FamilyPledge/FamilyPledge'
 import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import AudioContextProvider from './contexts/AudioContext/AudioContextProvider'
+import HolySongsPage from './pages/HolySongPlayer/HolySongsPage'
 
 const NavbarWrapper = () => {
   return (
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: '/family-pledge/:number',
         element: <FamilyPledge />,
+      },
+      {
+        path: '/holy-songs',
+        element: <HolySongsPage />,
       },
     ],
   },
