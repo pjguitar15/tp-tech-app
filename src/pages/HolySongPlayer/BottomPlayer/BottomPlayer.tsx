@@ -1,17 +1,30 @@
-import React from 'react'
 import { IoPlaySharp } from 'react-icons/io5'
 import { IoPlaySkipBackSharp } from 'react-icons/io5'
 import { IoPlaySkipForwardSharp } from 'react-icons/io5'
+import { IoMdPause } from 'react-icons/io'
 import { IoVolumeMediumSharp } from 'react-icons/io5'
+import { useHolySongContext } from '../../../contexts/HolySongContext/HolySongContext'
 
 const PlayerButtons = () => {
+  const { toggle, isHolySongPlaying } = useHolySongContext()
   const buttonStyle =
     'text-gray-300 hover:text-white hover:scale-105 cursor-pointer duration-100'
 
   return (
     <div className='flex gap-3 items-center'>
       <IoPlaySkipBackSharp className={`text-2xl ${buttonStyle}`} />
-      <IoPlaySharp className={`text-4xl ms-1 ${buttonStyle}`} />
+      {isHolySongPlaying ? (
+        <IoMdPause
+          onClick={toggle}
+          className={`text-4xl ms-1 ${buttonStyle}`}
+        />
+      ) : (
+        <IoPlaySharp
+          onClick={toggle}
+          className={`text-4xl ms-1 ${buttonStyle}`}
+        />
+      )}
+
       <IoPlaySkipForwardSharp className={`text-2xl ${buttonStyle}`} />
     </div>
   )

@@ -4,10 +4,9 @@ import TPImage from './pages/TPImage/TPImage'
 import Navbar from './components/Navbar/Navbar'
 import KajeongMaengse from './pages/KajeongMaengse/KajeongMaengse'
 import FamilyPledge from './pages/FamilyPledge/FamilyPledge'
-import { configureStore } from '@reduxjs/toolkit'
-import { Provider } from 'react-redux'
 import AudioContextProvider from './contexts/AudioContext/AudioContextProvider'
 import HolySongsPage from './pages/HolySongPlayer/HolySongsPage'
+import HolySongContextProvider from './contexts/HolySongContext/HolySongContextProvider'
 
 const NavbarWrapper = () => {
   return (
@@ -48,19 +47,13 @@ const router = createBrowserRouter([
   },
 ])
 
-const store = configureStore({
-  reducer: {
-    // user: useReducer,
-  },
-})
-
 const App = () => {
   return (
     <>
       <AudioContextProvider>
-        <Provider store={store}>
+        <HolySongContextProvider>
           <RouterProvider router={router} />
-        </Provider>
+        </HolySongContextProvider>
       </AudioContextProvider>
     </>
   )

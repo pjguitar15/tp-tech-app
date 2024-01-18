@@ -1,4 +1,3 @@
-import React from 'react'
 import { Helmet } from 'react-helmet'
 import image from '../../assets/default-bg.png'
 import { Link } from 'react-router-dom'
