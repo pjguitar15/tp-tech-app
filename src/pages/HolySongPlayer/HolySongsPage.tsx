@@ -4,6 +4,7 @@ import image from '../../assets/default-bg.png'
 import { Link } from 'react-router-dom'
 import { MdArrowBackIosNew } from 'react-icons/md'
 import HolySongList from './HolySongList/HolySongList'
+import BottomPlayer from './BottomPlayer/BottomPlayer'
 
 const HolySongsPage = () => {
   return (
@@ -30,6 +31,7 @@ const HolySongsPage = () => {
           <h1 className='text-center text-5xl font-bold'>Holy Songs</h1>
           <HolySongList />
         </section>
+        <BottomPlayer />
       </main>
     </>
   )
