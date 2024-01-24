@@ -40,9 +40,12 @@ const TitleAndNumber = () => {
 }
 
 const DurationAndVolume = () => {
+  const { currTime, currAudioDuration, currSeconds } = useHolySongContext()
   return (
     <div className='flex items-center gap-4'>
-      <div>0:58 - 1:38</div>
+      <div>
+        {currSeconds < 60 ? '00:' + currTime : currTime} - {currAudioDuration}
+      </div>
       <div className='flex items-center gap-2'>
         <IoVolumeMediumSharp className='text-xl' />
         <div className='bg-black w-24 rounded'>

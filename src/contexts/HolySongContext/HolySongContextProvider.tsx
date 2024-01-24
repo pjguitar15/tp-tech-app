@@ -1,6 +1,7 @@
 import React, { useState, ReactNode, useEffect } from 'react'
 import { HolySongContext, HolySongContextType } from './HolySongContext'
 import graceOfTheHolyGarden from '../../assets/holy-songs/grace-of-the-holy-garden.wav'
+import useSecondsToHms from '../../helpers/hooks/useSecondsToHms'
 
 const HolySongContextProvider: React.FC<{ children: ReactNode }> = ({
   children,
@@ -8,6 +9,10 @@ const HolySongContextProvider: React.FC<{ children: ReactNode }> = ({
   const [isHolySongPlaying, setIsHolySongPlaying] = useState(false)
   const [audioProgress, setAudioProgress] = useState(0)
   const [holySongAudio] = useState(new Audio(graceOfTheHolyGarden))
+  const [currAudioDuration, setCurrAudioDuration] = useState('0:00')
+  const [currTime, setCurrTime] = useState('0')
+  const [currSeconds, setCurrSeconds] = useState(0)
+  const { secondsToHms } = useSecondsToHms()
 
   const toggle = () => setIsHolySongPlaying(!isHolySongPlaying)
   // const handleReset = () => {
@@ -24,8 +29,11 @@ const HolySongContextProvider: React.FC<{ children: ReactNode }> = ({
       const audioDuration = holySongAudio.duration
       const durationPercentage = (currentTime / audioDuration) * 100
       // console.log(Math.floor(holySongAudio.currentTime))
-      console.log(Math.ceil(durationPercentage))
       setAudioProgress(Math.ceil(durationPercentage))
+      setCurrAudioDuration(secondsToHms(audioDuration))
+      setCurrTime(secondsToHms(currentTime))
+      console.log(parseInt(currentTime))
+      setCurrSeconds(currentTime)
     }
 
     if (isHolySongPlaying) {
@@ -53,6 +61,9 @@ const HolySongContextProvider: React.FC<{ children: ReactNode }> = ({
     toggle,
     isHolySongPlaying,
     audioProgress,
+    currAudioDuration,
+    currTime,
+    currSeconds,
     // handleReset,
   }
 

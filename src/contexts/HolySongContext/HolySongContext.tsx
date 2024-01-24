@@ -4,6 +4,9 @@ export interface HolySongContextType {
   toggle: () => void
   isHolySongPlaying: boolean
   audioProgress: number
+  currAudioDuration: string
+  currTime: string
+  currSeconds: number
   // handleReset: () => void
 }
 
