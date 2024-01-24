@@ -3,6 +3,7 @@ import { createContext, useContext } from 'react'
 export interface HolySongContextType {
   toggle: () => void
   isHolySongPlaying: boolean
+  audioProgress: number
   // handleReset: () => void
 }
 

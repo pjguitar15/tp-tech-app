@@ -54,8 +54,12 @@ const DurationAndVolume = () => {
 }
 
 const SongProgressBar = () => {
+  const { audioProgress } = useHolySongContext()
   return (
-    <div className='bg-white absolute top-0 right-0 left-0 w-[80%] z-10 h-1'></div>
+    <div
+      className={`bg-white absolute top-0 right-0 left-0 z-10 h-1`}
+      style={{ width: `${audioProgress}%` }}
+    ></div>
   )
 }
 

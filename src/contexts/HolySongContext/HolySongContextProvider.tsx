@@ -6,6 +6,7 @@ const HolySongContextProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [isHolySongPlaying, setIsHolySongPlaying] = useState(false)
+  const [audioProgress, setAudioProgress] = useState(0)
   const [holySongAudio] = useState(new Audio(graceOfTheHolyGarden))
 
   const toggle = () => setIsHolySongPlaying(!isHolySongPlaying)
@@ -16,8 +17,28 @@ const HolySongContextProvider: React.FC<{ children: ReactNode }> = ({
   // }
 
   useEffect(() => {
-    isHolySongPlaying ? holySongAudio.play() : holySongAudio.pause()
-  }, [isHolySongPlaying])
+    let intervalId: number | undefined
+
+    const updateCurrentTime = () => {
+      const currentTime = holySongAudio.currentTime
+      const audioDuration = holySongAudio.duration
+      const durationPercentage = (currentTime / audioDuration) * 100
+      // console.log(Math.floor(holySongAudio.currentTime))
+      console.log(Math.ceil(durationPercentage))
+      setAudioProgress(Math.ceil(durationPercentage))
+    }
+
+    if (isHolySongPlaying) {
+      holySongAudio.play()
+      intervalId = window.setInterval(updateCurrentTime, 1000) // Log every second
+    } else {
+      holySongAudio.pause()
+      window.clearInterval(intervalId)
+    }
+
+    // Cleanup function to clear the interval when the component unmounts or is updated
+    return () => window.clearInterval(intervalId)
+  }, [isHolySongPlaying, holySongAudio])
 
   useEffect(() => {
     holySongAudio.addEventListener('ended', () => setIsHolySongPlaying(false))
@@ -31,6 +52,7 @@ const HolySongContextProvider: React.FC<{ children: ReactNode }> = ({
   const contextValue: HolySongContextType = {
     toggle,
     isHolySongPlaying,
+    audioProgress,
     // handleReset,
   }
 
