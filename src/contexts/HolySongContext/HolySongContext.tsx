@@ -1,5 +1,16 @@
 import { createContext, useContext } from 'react'
 
+/* number: 2,
+    title: 'Grace of the Holy Garden',
+    duration: '2:18',
+    audio: graceOfTheHolyGarden, */
+
+export interface HolySongItemType {
+  number: number
+  title: string
+  duration: string
+}
+
 export interface HolySongContextType {
   toggle: () => void
   isHolySongPlaying: boolean
@@ -7,6 +18,8 @@ export interface HolySongContextType {
   currAudioDuration: string
   currTime: string
   currSeconds: number
+  currentHolySongItem: HolySongItemType | null
+  holySongSelect: (item: HolySongItemType) => void
   // handleReset: () => void
 }
 

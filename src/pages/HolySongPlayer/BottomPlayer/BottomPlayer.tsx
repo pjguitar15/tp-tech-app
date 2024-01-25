@@ -6,7 +6,8 @@ import { IoVolumeMediumSharp } from 'react-icons/io5'
 import { useHolySongContext } from '../../../contexts/HolySongContext/HolySongContext'
 
 const PlayerButtons = () => {
-  const { toggle, isHolySongPlaying } = useHolySongContext()
+  const { toggle, isHolySongPlaying, currentHolySongItem } =
+    useHolySongContext()
   const buttonStyle =
     'text-gray-300 hover:text-white hover:scale-105 cursor-pointer duration-100'
 
@@ -15,12 +16,15 @@ const PlayerButtons = () => {
       <IoPlaySkipBackSharp className={`text-2xl ${buttonStyle}`} />
       {isHolySongPlaying ? (
         <IoMdPause
-          onClick={toggle}
+          onClick={() => {
+            console.log(currentHolySongItem?.title)
+            toggle()
+          }}
           className={`text-4xl ms-1 ${buttonStyle}`}
         />
       ) : (
         <IoPlaySharp
-          onClick={toggle}
+          onClick={() => toggle()}
           className={`text-4xl ms-1 ${buttonStyle}`}
         />
       )}
@@ -31,10 +35,13 @@ const PlayerButtons = () => {
 }
 
 const TitleAndNumber = () => {
+  const { currentHolySongItem } = useHolySongContext()
   return (
     <div>
-      <h5 className='font-semibold'>Grace of the Holy Garden</h5>
-      <p className='text-sm text-slate-400'>Holy Song #1</p>
+      <h5 className='font-semibold'>{currentHolySongItem?.title}</h5>
+      <p className='text-sm text-slate-400'>
+        Holy Song #{currentHolySongItem?.number}
+      </p>
     </div>
   )
 }

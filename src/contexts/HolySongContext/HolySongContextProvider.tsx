@@ -1,25 +1,56 @@
 import React, { useState, ReactNode, useEffect } from 'react'
-import { HolySongContext, HolySongContextType } from './HolySongContext'
-import graceOfTheHolyGarden from '../../assets/holy-songs/grace-of-the-holy-garden.wav'
+import {
+  HolySongContext,
+  HolySongContextType,
+  HolySongItemType,
+} from './HolySongContext'
+import test from '../../assets/sound/prayer.mp3'
 import useSecondsToHms from '../../helpers/hooks/useSecondsToHms'
+import { HOLY_SONG_AUDIOS } from './holySongAudioFiles'
 
 const HolySongContextProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [isHolySongPlaying, setIsHolySongPlaying] = useState(false)
+  const [holySongAudio, setHolySongAudio] = useState<HTMLAudioElement>(
+    new Audio(test)
+  )
+
+  // for bottom player states
   const [audioProgress, setAudioProgress] = useState(0)
-  const [holySongAudio] = useState(new Audio(graceOfTheHolyGarden))
   const [currAudioDuration, setCurrAudioDuration] = useState('0:00')
   const [currTime, setCurrTime] = useState('0')
   const [currSeconds, setCurrSeconds] = useState(0)
+  const [currentHolySongItem, setCurrentHolySongItem] =
+    useState<HolySongItemType | null>(null)
   const { secondsToHms } = useSecondsToHms()
 
-  const toggle = () => setIsHolySongPlaying(!isHolySongPlaying)
-  // const handleReset = () => {
-  //   holySongAudio.pause()
-  //   holySongAudio.currentTime = 0
-  //   setIsHolySongPlaying(false)
-  // }
+  const toggle = () => {
+    setIsHolySongPlaying(!isHolySongPlaying)
+  }
+
+  const holySongSelect = (holySongItem: HolySongItemType) => {
+    // console.log(holySongItem)
+    // setIsHolySongPlaying(false)
+    setCurrentHolySongItem(holySongItem)
+
+    // option 1: combine 2 arrays using map() function
+    // option 2: use filter function to find the audio
+    // once found, set new Audio
+
+    // setIsHolySongPlaying(true)
+  }
+
+  useEffect(() => {
+    holySongAudio.pause()
+    if (currentHolySongItem) {
+      const newAudio = new Audio(
+        HOLY_SONG_AUDIOS[currentHolySongItem.number - 1]
+      )
+      setHolySongAudio(newAudio)
+      setIsHolySongPlaying(true)
+    }
+  }, [currentHolySongItem])
 
   useEffect(() => {
     let intervalId: number | undefined
@@ -32,7 +63,6 @@ const HolySongContextProvider: React.FC<{ children: ReactNode }> = ({
       setAudioProgress(Math.ceil(durationPercentage))
       setCurrAudioDuration(secondsToHms(audioDuration))
       setCurrTime(secondsToHms(currentTime))
-      console.log(parseInt(currentTime))
       setCurrSeconds(currentTime)
     }
 
@@ -48,14 +78,14 @@ const HolySongContextProvider: React.FC<{ children: ReactNode }> = ({
     return () => window.clearInterval(intervalId)
   }, [isHolySongPlaying, holySongAudio])
 
+  const handleSongEnd = () => setIsHolySongPlaying(false)
+
   useEffect(() => {
-    holySongAudio.addEventListener('ended', () => setIsHolySongPlaying(false))
+    holySongAudio.addEventListener('ended', handleSongEnd)
     return () => {
-      holySongAudio.removeEventListener('ended', () =>
-        setIsHolySongPlaying(false)
-      )
+      holySongAudio.removeEventListener('ended', handleSongEnd)
     }
-  }, [])
+  }, [holySongAudio])
 
   const contextValue: HolySongContextType = {
     toggle,
@@ -64,6 +94,8 @@ const HolySongContextProvider: React.FC<{ children: ReactNode }> = ({
     currAudioDuration,
     currTime,
     currSeconds,
+    currentHolySongItem,
+    holySongSelect,
     // handleReset,
   }
 

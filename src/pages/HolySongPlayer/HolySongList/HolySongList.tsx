@@ -1,38 +1,5 @@
-import React from 'react'
 import SongListItem from './SongListItem'
-
-const TEST_SONGS = [
-  {
-    number: 1,
-    title: 'Blessing of Glory',
-    duration: '3:04',
-  },
-  {
-    number: 2,
-    title: 'Grace of the Holy Garden',
-    duration: '3:04',
-  },
-  {
-    number: 3,
-    title: 'New Songs of Inspiration',
-    duration: '3:04',
-  },
-  {
-    number: 4,
-    title: 'Garden of Restoration',
-    duration: '3:04',
-  },
-  {
-    number: 5,
-    title: 'Spring Songs of Eden',
-    duration: '3:04',
-  },
-  {
-    number: 6,
-    title: 'Song of the Victors',
-    duration: '3:04',
-  },
-]
+import { HOLY_SONGS } from './holySongsData'
 
 export type SongListItemType = {
   number: number
@@ -48,7 +15,7 @@ const HolySongList = () => {
         <div className='w-6/12'>Title</div>
         <div className='w-2/12'>Duration</div>
       </div>
-      {TEST_SONGS.map((item: SongListItemType, index) => (
+      {HOLY_SONGS.map((item: SongListItemType, index) => (
         <SongListItem key={index} item={item} />
       ))}
     </div>
