@@ -3,6 +3,7 @@ export const HOLY_SONGS = [
     number: 1,
     title: 'Blessing of Glory',
     duration: '3:04',
+    lyrics: ['Grace feeling me with golden light'],
   },
   {
     number: 2,

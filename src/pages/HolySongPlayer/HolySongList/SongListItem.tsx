@@ -1,12 +1,22 @@
 import React from 'react'
 import { SongListItemType } from './HolySongList'
 import { useHolySongContext } from '../../../contexts/HolySongContext/HolySongContext'
+import { useNavigate } from 'react-router-dom'
 
 const SongListItem: React.FC<{ item: SongListItemType }> = ({ item }) => {
   const { holySongSelect } = useHolySongContext()
+  const navigate = useNavigate()
   return (
     <div
-      onClick={() => holySongSelect(item)}
+      onClick={() => {
+        holySongSelect(item)
+        navigate(
+          `/holy-songs/lyrics/${item.title
+            .replace(/%20/g, ' ')
+            .replace(/ /g, '-')
+            .toLowerCase()}`
+        )
+      }}
       className='px-6 py-3 relative hover:scale-105 duration-200 cursor-pointer'
     >
       <div className='flex px-6 relative z-10 text-lg font-semibold'>

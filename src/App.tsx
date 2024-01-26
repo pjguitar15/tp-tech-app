@@ -7,6 +7,7 @@ import FamilyPledge from './pages/FamilyPledge/FamilyPledge'
 import AudioContextProvider from './contexts/AudioContext/AudioContextProvider'
 import HolySongsPage from './pages/HolySongPlayer/HolySongsPage'
 import HolySongContextProvider from './contexts/HolySongContext/HolySongContextProvider'
+import HolySongLyrics from './pages/HolySongPlayer/HolySongLyrics/HolySongLyrics'
 
 const NavbarWrapper = () => {
   return (
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: '/holy-songs',
         element: <HolySongsPage />,
+      },
+      {
+        path: '/holy-songs/lyrics/:title',
+        element: <HolySongLyrics />,
       },
     ],
   },

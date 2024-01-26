@@ -30,17 +30,10 @@ const HolySongContextProvider: React.FC<{ children: ReactNode }> = ({
   }
 
   const holySongSelect = (holySongItem: HolySongItemType) => {
-    // console.log(holySongItem)
-    // setIsHolySongPlaying(false)
     setCurrentHolySongItem(holySongItem)
-
-    // option 1: combine 2 arrays using map() function
-    // option 2: use filter function to find the audio
-    // once found, set new Audio
-
-    // setIsHolySongPlaying(true)
   }
 
+  // changes the current song playing
   useEffect(() => {
     holySongAudio.pause()
     if (currentHolySongItem) {
@@ -52,6 +45,7 @@ const HolySongContextProvider: React.FC<{ children: ReactNode }> = ({
     }
   }, [currentHolySongItem])
 
+  // pauses song and update current time duration
   useEffect(() => {
     let intervalId: number | undefined
 
@@ -59,7 +53,6 @@ const HolySongContextProvider: React.FC<{ children: ReactNode }> = ({
       const currentTime = holySongAudio.currentTime
       const audioDuration = holySongAudio.duration
       const durationPercentage = (currentTime / audioDuration) * 100
-      // console.log(Math.floor(holySongAudio.currentTime))
       setAudioProgress(Math.ceil(durationPercentage))
       setCurrAudioDuration(secondsToHms(audioDuration))
       setCurrTime(secondsToHms(currentTime))
@@ -74,7 +67,6 @@ const HolySongContextProvider: React.FC<{ children: ReactNode }> = ({
       window.clearInterval(intervalId)
     }
 
-    // Cleanup function to clear the interval when the component unmounts or is updated
     return () => window.clearInterval(intervalId)
   }, [isHolySongPlaying, holySongAudio])
 
@@ -96,7 +88,6 @@ const HolySongContextProvider: React.FC<{ children: ReactNode }> = ({
     currSeconds,
     currentHolySongItem,
     holySongSelect,
-    // handleReset,
   }
 
   return (
